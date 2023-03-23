@@ -1,0 +1,38 @@
+
+setwd("C:/Users/sydne/Documents/Winter '23/373")
+
+acled_data_LA <- read.csv("LatinAmerica_2018-2023_Feb24.csv")
+acled_data_LA
+
+summary(acled_data_LA)
+table(acled_data_LA$EVENT_TYPE)
+
+Colombia_data <- subset(acled_data_LA, COUNTRY == Colombia)
+Colombia_data
+
+summary(Colombia_data)
+table(Colombia_data$EVENT_TYPE)
+
+Colombia_data_highlights <- data.frame(Colombia_data$EVENT_DATE, Colombia_data$YEAR, Colombia_data$EVENT_TYPE, Colombia_data$SUB_EVENT_TYPE, Colombia_data$FATALITIES)
+Colombia_data_highlights
+colnames(Colombia_data_highlights) <- c("EVENT_DATE", "YEAR", "EVENT_TYPE", "SUB_EVENT_TYPE", "FATALITIES")
+
+sorted_by_FATALITIES <- Colombia_data_highlights[order(Colombia_data_highlights$"FATALITIES", decreasing=TRUE),]  ### Shows data by number of casualties, decreasing
+sorted_by_FATALITIES
+
+ ### Shows data by year of the event, recent first
+
+    three_or_more_FATALITIES <- which(sorted_by_FATALITIES$FATALITIES>=3)
+    three_or_more_FATALITIES
+    
+    FATALITIES_gtTen_selection <- sorted_by_FATALITIES[three_or_more_FATALITIES,]
+    FATALITIES_gtTen_selection
+  
+    sorted_by_YEAR <- FATALITIES_gtTen_selection[order(FATALITIES_gtTen_selection$"YEAR", decreasing = TRUE),] ### Shows data by year of the event, recent first. Allows us to see violence episodes.
+    sorted_by_YEAR
+
+    tab_output <- table(sorted_by_YEAR$YEAR)
+    tab_output
+    
+    barplot(tab_output, col = "orange", xlab = "Year", ylab = "Number of Significant Violent Events")
+    
