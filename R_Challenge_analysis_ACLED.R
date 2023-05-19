@@ -636,10 +636,10 @@ empty_df <- data.frame( ### create empty dataframe with columns for the terms ve
 list_of_term_info <- NULL ### create new empty object 
 
 for(i in 1:length(Termss)){ ### use for loop to fill the object as follows
-  Term_Locations <- which(DTM_result_50$Var1 == Termss[i]) ### identify which rows in DTM_result_50 contain each of the top 50 terms (each for loop focuses on a new term)
+  Term_Locations <- which(Ordered_Top_100_Results$Var1 == Termss[i]) ### identify which rows in the DTM contain each of the top 50 terms (each for loop focuses on a new term)
   
-  Term_Docs <- DTM_result_50$Doc[Term_Locations] ### find which documents contain the top 50 terms using the term locations we found
-  Term_Freqs <- DTM_result_50$Freq[Term_Locations] ### do the same but to find the frequencies associated with each term
+  Term_Docs <- Ordered_Top_100_Results$Doc[Term_Locations] ### find which documents contain the top 50 terms using the term locations we found
+  Term_Freqs <- Ordered_Top_100_Results$Freq[Term_Locations] ### do the same but to find the frequencies associated with each term
   
   list_of_term_info[[i]] <- data.frame(Term_Docs, Term_Freqs) ## create new data frame of each of the frequency of each term in each document it is found in
 }                                                               ## a data frame is created usning the for loop for each term and then saved as an element of a list in the empty object list_of_term_info
@@ -664,9 +664,8 @@ dev.off() ## plotting set up
 par(mfrow=c(1,1))
 
 barplot(as.matrix(t(full_dataset[2:50,3:8])), names.arg = full_dataset$Term[2:50],  ### use as.matrix and t functions to reformat the now full dataset. Also select [2:50,3:8] to avoid the first row (its just the blank space count) and select only the frequency columns
-        beside=FALSE, col=c("#d00000", "#ffba08", "#3f88c5", "#032b43", "#136f63", "#90be6d"),  
-        xlab="Frequency", ylab="Terms", main="Common Term Frequency by Event Type", 
-        cex.names = .5, cex.lab=1.25, cex.axis = .5, axes = TRUE, las = 2, space = c(0,0))
+        beside=FALSE, col=c("red", "yellow", "green", "cyan", "blue", "magenta"),  
+        xlab=" ", ylab="Term Frequency", main="Frequency of Common Terms in LA ACLED Data by Event Type", 
+        cex.names = .7, cex.lab=1.25, cex.axis = .7, axes = TRUE, las = 2, space = c(0,0))
 
-legend("topright", legend=Event_Types, fill= c("#d00000", "#ffba08", "#3f88c5", "#032b43", "#136f63", "#90be6d"), bg="white") ### create legend on the right side of the plotting space using a vector of colors and respective names for the event types 
-### I ran out of time to get the names and axes to fit perfectly
+legend("topright", legend=Event_Types, fill= c("red", "yellow", "green", "cyan", "blue", "magenta"), bg="white") ### create legend on the right side of the plotting space using a vector of colors and respective names for the event types 
